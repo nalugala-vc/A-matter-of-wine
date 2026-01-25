@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+  /* Luxury Color Palette */
+  --emerald-green: #10b981;
+  --emerald-green-dark: #059669;
+  --olive-green: #6b7c3f;
+  --olive-green-dark: #4a5530;
+  --gold: #d4af37;
+  --gold-light: #f4e4bc;
+  --gold-dark: #b8941f;
+  --light-bg: #fafafa;
+  --light-bg-transparent: rgba(250, 250, 250, 0.9);
+  --dark-bg: #1a1a1a;
+  --text-dark: #1a1a1a;
+  --text-muted: #666666;
+  --text-light: #f5f5f5;
+  --card-bg: #ffffff;
+
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--light-bg);
+  color: var(--text-dark);
+  overflow-x: hidden;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
