@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from 'react'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import './App.css'
 import heroImage1 from './assets/images/WhatsApp Image 2026-01-21 at 00.05.13.jpeg'
-import heroImage2 from './assets/images/Gemini_Generated_Image_o6djhro6djhro6dj.png'
-import heroImage3 from './assets/images/Gemini_Generated_Image_kgbxjkgbxjkgbxjk.png'
-import heroImage4 from './assets/images/Gemini_Generated_Image_g98kvmg98kvmg98k.png'
+import heroImage2 from './assets/images/pexels-mlkbnl-9299260.jpg'
+import heroImage3 from './assets/images/pexels-marketingtuig-87224.jpg'
+import heroImage4 from './assets/images/ChatGPT Image Jan 25, 2026, 06_56_39 PM.png'
 import personalCellarImage from './assets/features/personal_wine_cellar_2.png'
 import vibrantCommImage from './assets/features/vibrant_comm_2.png'
 import eventsMeetupsImage from './assets/features/events_meetups_2.png'
@@ -29,6 +29,7 @@ function App() {
 function Home() {
   const featureItemsRef = useRef<(HTMLDivElement | null)[]>([])
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const heroImages = [heroImage1, heroImage2, heroImage3, heroImage4]
 
   useEffect(() => {
@@ -91,12 +92,28 @@ function Home() {
               <h2>Winesta</h2>
             </Link>
           </div>
-          <div className="nav-links">
-            <a href="#events" className="nav-link">Events</a>
-            <a href="#sommelier" className="nav-link">Sommelier</a>
-            <a href="#stories" className="nav-link">Stories</a>
+          <button 
+            className="mobile-menu-toggle" 
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? '✕' : '☰'}
+          </button>
+          {mobileMenuOpen && (
+            <div 
+              className="mobile-menu-overlay" 
+              onClick={() => setMobileMenuOpen(false)}
+            ></div>
+          )}
+          <div className={`nav-links ${mobileMenuOpen ? 'mobile-open' : ''}`}>
+            <a href="#events" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Events</a>
+            <a href="#sommelier" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Sommelier</a>
+            <a href="#stories" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Stories</a>
+            <Link to="/login" className="nav-button nav-button-mobile" style={{ textDecoration: 'none' }} onClick={() => setMobileMenuOpen(false)}>
+              Get Started
+            </Link>
           </div>
-          <Link to="/login" className="nav-button" style={{ textDecoration: 'none' }}>
+          <Link to="/login" className="nav-button nav-button-desktop" style={{ textDecoration: 'none' }}>
             Get Started
           </Link>
         </div>
@@ -110,7 +127,17 @@ function Home() {
               key={index}
               className={`hero-slide ${index === currentSlide ? 'active' : ''}`}
               style={{ backgroundImage: `url(${image})` }}
-            ></div>
+            >
+              {(index === 1 || index === 2 || index === 3) && (
+                <div className="hero-text-overlay">
+                  <p className="hero-chalk-text">
+                    sometimes its just a matter of{' '}
+                    <span className="hero-crossed-out">time</span>
+                    <span className="hero-wine-text">wine</span>
+                  </p>
+                </div>
+              )}
+            </div>
           ))}
           
           <button className="hero-nav hero-nav-prev" onClick={prevSlide} aria-label="Previous slide">

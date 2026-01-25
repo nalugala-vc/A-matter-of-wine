@@ -23,6 +23,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
 }
 
 .nav-logo h2 {
@@ -31,6 +32,7 @@
   font-weight: 600;
   color: var(--gold);
   letter-spacing: 0.5px;
+  margin: 0;
 }
 
 .nav-links {
@@ -92,6 +94,42 @@
   background: #5a6240;
 }
 
+.nav-button-mobile {
+  display: none;
+}
+
+.nav-button-desktop {
+  display: inline-block;
+}
+
+.mobile-menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--gold);
+  font-size: 1.8rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: transform 0.3s ease;
+  z-index: 1001;
+  position: relative;
+}
+
+.mobile-menu-toggle:hover {
+  transform: scale(1.1);
+}
+
+.mobile-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+  backdrop-filter: blur(2px);
+}
+
 /* Hero Section */
 .hero {
   height: 100vh;
@@ -117,10 +155,61 @@
   background-repeat: no-repeat;
   opacity: 0;
   transition: opacity 1s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero-slide.active {
   opacity: 1;
+}
+
+.hero-text-overlay {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  padding: 2rem;
+}
+
+.hero-chalk-text {
+  font-family: 'Caveat', cursive;
+  font-size: 4rem;
+  font-weight: 700;
+  color: #FFF8DC;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 0, 0, 0.3);
+  margin: 0;
+  line-height: 1.2;
+  letter-spacing: 2px;
+}
+
+.hero-crossed-out {
+  position: relative;
+  color: #D2B48C;
+  text-decoration: line-through;
+  text-decoration-thickness: 3px;
+  text-decoration-color: #D2B48C;
+  margin-right: 0.5rem;
+}
+
+.hero-wine-text {
+  color: #D2B48C;
+  font-weight: 700;
+  margin-left: 0.3rem;
+}
+
+@media (max-width: 768px) {
+  .hero-chalk-text {
+    font-size: 2.5rem;
+    letter-spacing: 1px;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-chalk-text {
+    font-size: 2rem;
+    letter-spacing: 0.5px;
+  }
 }
 
 .hero-nav {
@@ -354,23 +443,84 @@
   line-height: 1.8;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
+/* Tablet and Mobile Responsive */
+@media (max-width: 968px) {
+  .navbar {
+    padding: 0.85rem 0;
+  }
+
   .nav-container {
     padding: 0 2rem;
   }
 
   .nav-links {
-    gap: 1.5rem;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 320px;
+    height: 100vh;
+    background: rgba(10, 10, 10, 0.98);
+    backdrop-filter: blur(20px);
+    flex-direction: column;
+    gap: 0;
+    padding: 5rem 0 2rem;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: -8px 0 32px rgba(0, 0, 0, 0.5);
+    transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 999;
+    overflow-y: auto;
+  }
+
+  .nav-links.mobile-open {
+    right: 0;
+    display: flex;
+  }
+
+  .nav-button-desktop {
+    display: none;
+  }
+
+  .nav-button-mobile {
+    display: block;
+    width: calc(100% - 4rem);
+    margin: 1.5rem 2rem 0;
+    text-align: center;
+    padding: 1rem 1.8rem;
+    border-radius: 5px;
+  }
+
+  .nav-button-mobile:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(100, 109, 69, 0.4);
+    background: #5a6240;
   }
 
   .nav-link {
-    font-size: 0.85rem;
+    width: 100%;
+    padding: 1.2rem 2rem;
+    font-size: 1rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.3s ease;
+  }
+
+  .nav-link:hover {
+    background: rgba(212, 175, 55, 0.1);
+    padding-left: 2.5rem;
+  }
+
+  .nav-link::after {
+    display: none;
   }
 
   .nav-button {
-    padding: 0.6rem 1.4rem;
-    font-size: 0.85rem;
+    padding: 0.65rem 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .mobile-menu-toggle {
+    display: block;
   }
 
   .features {
@@ -423,19 +573,38 @@
   }
 }
 
+/* Small Mobile Responsive */
 @media (max-width: 480px) {
+  .navbar {
+    padding: 0.75rem 0;
+  }
+
   .nav-container {
     padding: 0 1.5rem;
   }
 
   .nav-logo h2 {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
   }
 
   .nav-links {
-    gap: 1rem;
+    margin-top: 0.75rem;
+    padding: 0;
   }
-}
+
+  .nav-link {
+    padding: 1rem 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  .nav-button {
+    padding: 0.6rem 1.3rem;
+    font-size: 0.85rem;
+  }
+
+  .mobile-menu-toggle {
+    font-size: 1.6rem;
+  }
 
 /* Articles Section */
 .articles {
