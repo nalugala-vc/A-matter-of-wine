@@ -11,7 +11,6 @@ function Login() {
       <div className="auth-wrapper">
         <div className="auth-form-section">
           <Link to="/" className="auth-back-link">← Back to Home</Link>
-          
           <div className="auth-form-content">
             <h2 className="auth-title">Welcome back</h2>
             <p className="auth-subtitle">

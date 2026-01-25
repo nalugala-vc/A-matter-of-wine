@@ -18,6 +18,11 @@
   border-radius: 0;
   overflow: hidden;
   box-shadow: none;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.auth-wrapper.signup-layout {
+  grid-template-columns: 1fr 1.5fr;
 }
 
 .auth-back-link {
@@ -45,6 +50,11 @@
   background: var(--card-bg);
   height: 100%;
   position: relative;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease;
+}
+
+.auth-wrapper.signup-layout .auth-form-section {
+  order: 2;
 }
 
 .auth-form-content {
@@ -239,6 +249,11 @@
   min-height: 600px;
   overflow: hidden;
   position: relative;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease;
+}
+
+.auth-wrapper.signup-layout .auth-image-section {
+  order: 1;
 }
 
 .auth-brand-overlay {
@@ -268,18 +283,52 @@
 @media (max-width: 968px) {
   .auth-wrapper {
     grid-template-columns: 1fr;
+    height: auto;
+    min-height: 100vh;
   }
 
   .auth-image-section {
+    display: block;
+    height: 300px;
+    min-height: 300px;
+    order: -1;
+    margin-bottom: 10px;
+    position: relative;
+  }
+
+  .auth-image-section .auth-back-link {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    font-size: 0.85rem;
+  }
+
+  .auth-form-section .auth-back-link {
     display: none;
   }
 
   .auth-form-section {
-    padding: 0;
+    padding: 2rem 0 4rem;
+    height: auto;
+    min-height: auto;
   }
 
   .auth-form-content {
     padding: 0 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .auth-title {
+    margin-top: 2rem;
+  }
+
+  .auth-brand-overlay {
+    top: 1.5rem;
+    right: 1.5rem;
+  }
+
+  .auth-brand-overlay h1 {
+    font-size: 1.5rem;
   }
 }
 

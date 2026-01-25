@@ -9,10 +9,9 @@ function Signup() {
 
   return (
     <div className="auth-container">
-      <div className="auth-wrapper">
+      <div className="auth-wrapper signup-layout">
         <div className="auth-form-section">
           <Link to="/" className="auth-back-link">← Back to Home</Link>
-          
           <div className="auth-form-content">
             <h2 className="auth-title">Create your account</h2>
             <p className="auth-subtitle">
