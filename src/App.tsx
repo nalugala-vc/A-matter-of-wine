@@ -1,15 +1,35 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import './App.css'
-import heroImage from './assets/images/WhatsApp Image 2026-01-21 at 00.05.13.jpeg'
+import heroImage1 from './assets/images/WhatsApp Image 2026-01-21 at 00.05.13.jpeg'
+import heroImage2 from './assets/images/Gemini_Generated_Image_o6djhro6djhro6dj.png'
+import heroImage3 from './assets/images/Gemini_Generated_Image_kgbxjkgbxjkgbxjk.png'
+import heroImage4 from './assets/images/Gemini_Generated_Image_g98kvmg98kvmg98k.png'
 import personalCellarImage from './assets/features/personal_wine_cellar_2.png'
 import vibrantCommImage from './assets/features/vibrant_comm_2.png'
 import eventsMeetupsImage from './assets/features/events_meetups_2.png'
 import aiSommelierImage from './assets/features/ai_sommlier_2.png'
 import leftGrapevine from './assets/images/left_purple.png'
 import rightGrapevine from './assets/images/right_purple.png'
+import Login from './auth/Login'
+import Signup from './auth/Signup'
 
 function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </Router>
+  )
+}
+
+function Home() {
   const featureItemsRef = useRef<(HTMLDivElement | null)[]>([])
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const heroImages = [heroImage1, heroImage2, heroImage3, heroImage4]
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -40,25 +60,78 @@ function App() {
       })
     }
   }, [])
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroImages.length)
+    }, 5000)
+
+    return () => clearInterval(interval)
+  }, [heroImages.length])
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % heroImages.length)
+  }
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + heroImages.length) % heroImages.length)
+  }
+
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index)
+  }
+
   return (
     <div className="app">
       {/* Navbar */}
       <nav className="navbar">
         <div className="nav-container">
           <div className="nav-logo">
-            <h2>Winesta</h2>
+            <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <h2>Winesta</h2>
+            </Link>
           </div>
           <div className="nav-links">
             <a href="#events" className="nav-link">Events</a>
             <a href="#sommelier" className="nav-link">Sommelier</a>
             <a href="#stories" className="nav-link">Stories</a>
           </div>
-          <button className="nav-button">Get Started</button>
+          <Link to="/login" className="nav-button" style={{ textDecoration: 'none' }}>
+            Get Started
+          </Link>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="hero" style={{ backgroundImage: `url(${heroImage})` }}></section>
+      <section className="hero">
+        <div className="hero-carousel">
+          {heroImages.map((image, index) => (
+            <div
+              key={index}
+              className={`hero-slide ${index === currentSlide ? 'active' : ''}`}
+              style={{ backgroundImage: `url(${image})` }}
+            ></div>
+          ))}
+          
+          <button className="hero-nav hero-nav-prev" onClick={prevSlide} aria-label="Previous slide">
+            ←
+          </button>
+          <button className="hero-nav hero-nav-next" onClick={nextSlide} aria-label="Next slide">
+            →
+          </button>
+
+          <div className="hero-dots">
+            {heroImages.map((_, index) => (
+              <button
+                key={index}
+                className={`hero-dot ${index === currentSlide ? 'active' : ''}`}
+                onClick={() => goToSlide(index)}
+                aria-label={`Go to slide ${index + 1}`}
+              ></button>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* Features Section */}
       <section className="features">
