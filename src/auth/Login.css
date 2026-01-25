@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--light-bg);
+  background: #faf9f7;
   padding: 0;
 }
 
@@ -20,6 +20,23 @@
   box-shadow: none;
 }
 
+.auth-back-link {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #646d45;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  z-index: 10;
+}
+
+.auth-back-link:hover {
+  color: #5a6240;
+}
+
 .auth-form-section {
   padding: 0;
   display: flex;
@@ -27,24 +44,21 @@
   justify-content: center;
   background: var(--card-bg);
   height: 100%;
+  position: relative;
 }
 
 .auth-form-content {
   width: 100%;
-  max-width: 400px;
+  max-width: 500px;
   padding: 0 3rem;
 }
 
 .auth-logo {
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 
 .auth-brand {
-  font-family: 'Playfair Display', serif;
-  font-size: 2rem;
-  font-weight: 600;
-  color: var(--text-dark);
-  letter-spacing: 0.5px;
+  display: none;
 }
 
 .auth-title {
@@ -52,8 +66,18 @@
   font-size: 2.5rem;
   font-weight: 700;
   color: var(--text-dark);
-  margin-bottom: 2.5rem;
+  margin-bottom: 0;
   letter-spacing: -0.5px;
+}
+
+.auth-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--text-muted);
+  margin-bottom: 2.5rem;
+  margin-top: 0;
+  line-height: 1.6;
 }
 
 .auth-form {
@@ -114,11 +138,37 @@
 
 .auth-input-group {
   width: 100%;
+  position: relative;
+}
+
+.auth-password-group {
+  position: relative;
+}
+
+.auth-password-toggle {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+  transition: color 0.3s ease;
+}
+
+.auth-password-toggle:hover {
+  color: var(--text-dark);
 }
 
 .auth-input {
   width: 100%;
   padding: 0.875rem 1rem;
+  padding-right: 3rem;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 8px;
   font-family: 'Inter', sans-serif;
@@ -128,6 +178,10 @@
   background: var(--card-bg);
   transition: border-color 0.3s ease;
   outline: none;
+}
+
+.auth-input-group:not(.auth-password-group) .auth-input {
+  padding-right: 1rem;
 }
 
 .auth-input::placeholder {
@@ -185,6 +239,22 @@
   min-height: 600px;
   overflow: hidden;
   position: relative;
+}
+
+.auth-brand-overlay {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  z-index: 10;
+}
+
+.auth-brand-overlay h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #646d45;
+  letter-spacing: 0.5px;
+  margin: 0;
 }
 
 .auth-image {

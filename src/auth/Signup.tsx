@@ -1,18 +1,23 @@
 import { Link } from 'react-router-dom'
+import { useState } from 'react'
 import './Login.css'
 import loginImage from '../assets/images/pexels-helvel-19584152.jpg'
 
 function Signup() {
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+
   return (
     <div className="auth-container">
       <div className="auth-wrapper">
         <div className="auth-form-section">
+          <Link to="/" className="auth-back-link">← Back to Home</Link>
+          
           <div className="auth-form-content">
-            <div className="auth-logo">
-              <h1 className="auth-brand">Winesta</h1>
-            </div>
-            
             <h2 className="auth-title">Create your account</h2>
+            <p className="auth-subtitle">
+              Join a community of wine enthusiasts.
+            </p>
             
             <form className="auth-form">
               <button type="button" className="auth-google-btn">
@@ -32,7 +37,7 @@ function Signup() {
               <div className="auth-input-group">
                 <input
                   type="text"
-                  placeholder="Enter email or username"
+                  placeholder="Enter username"
                   className="auth-input"
                   required
                 />
@@ -40,11 +45,65 @@ function Signup() {
               
               <div className="auth-input-group">
                 <input
-                  type="password"
+                  type="text"
+                  placeholder="Enter email"
+                  className="auth-input"
+                  required
+                />
+              </div>
+              
+              <div className="auth-input-group auth-password-group">
+                <input
+                  type={showPassword ? "text" : "password"}
                   placeholder="Create password"
                   className="auth-input"
                   required
                 />
+                <button
+                  type="button"
+                  className="auth-password-toggle"
+                  onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? (
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                      <line x1="1" y1="1" x2="23" y2="23"></line>
+                    </svg>
+                  ) : (
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                      <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                  )}
+                </button>
+              </div>
+              
+              <div className="auth-input-group auth-password-group">
+                <input
+                  type={showConfirmPassword ? "text" : "password"}
+                  placeholder="Confirm password"
+                  className="auth-input"
+                  required
+                />
+                <button
+                  type="button"
+                  className="auth-password-toggle"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+                >
+                  {showConfirmPassword ? (
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                      <line x1="1" y1="1" x2="23" y2="23"></line>
+                    </svg>
+                  ) : (
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                      <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                  )}
+                </button>
               </div>
               
               <button type="submit" className="auth-submit-btn">
@@ -59,6 +118,9 @@ function Signup() {
         </div>
         
         <div className="auth-image-section">
+          <div className="auth-brand-overlay">
+            <h1>Winesta</h1>
+          </div>
           <img src={loginImage} alt="Wine" className="auth-image" />
         </div>
       </div>
