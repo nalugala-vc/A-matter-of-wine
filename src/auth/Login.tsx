@@ -10,7 +10,6 @@ function Login() {
     <div className="auth-container">
       <div className="auth-wrapper">
         <div className="auth-form-section">
-          <Link to="/" className="auth-back-link">← Back to Home</Link>
           <div className="auth-form-content">
             <h2 className="auth-title">Welcome back</h2>
             <p className="auth-subtitle">
@@ -80,6 +79,7 @@ function Login() {
         </div>
         
         <div className="auth-image-section">
+          <Link to="/" className="auth-back-link">← Back to Home</Link>
           <div className="auth-brand-overlay">
             <h1>Winesta</h1>
           </div>

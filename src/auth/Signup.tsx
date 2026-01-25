@@ -11,7 +11,6 @@ function Signup() {
     <div className="auth-container">
       <div className="auth-wrapper signup-layout">
         <div className="auth-form-section">
-          <Link to="/" className="auth-back-link">← Back to Home</Link>
           <div className="auth-form-content">
             <h2 className="auth-title">Create your account</h2>
             <p className="auth-subtitle">
@@ -117,7 +116,8 @@ function Signup() {
         </div>
         
         <div className="auth-image-section">
-          <div className="auth-brand-overlay">
+          <Link to="/" className="auth-back-link auth-back-link-signup-mobile">← Back to Home</Link>
+          <div className="auth-brand-overlay auth-brand-overlay-signup">
             <h1>Winesta</h1>
           </div>
           <img src={loginImage} alt="Wine" className="auth-image" />
