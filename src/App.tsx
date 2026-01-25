@@ -13,6 +13,7 @@ import leftGrapevine from './assets/images/left_purple.png'
 import rightGrapevine from './assets/images/right_purple.png'
 import Login from './auth/Login'
 import Signup from './auth/Signup'
+import PersonalWineCellar from './features/personal-wine-cellar/pages/PersonalWineCellar'
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/cellar" element={<PersonalWineCellar />} />
         <Route path="/" element={<Home />} />
       </Routes>
     </Router>
@@ -106,6 +108,7 @@ function Home() {
             ></div>
           )}
           <div className={`nav-links ${mobileMenuOpen ? 'mobile-open' : ''}`}>
+            <Link to="/cellar" className="nav-link" onClick={() => setMobileMenuOpen(false)}>My Cellar</Link>
             <a href="#events" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Events</a>
             <a href="#sommelier" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Sommelier</a>
             <a href="#stories" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Stories</a>

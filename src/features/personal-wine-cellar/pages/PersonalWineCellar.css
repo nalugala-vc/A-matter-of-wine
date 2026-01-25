@@ -1,0 +1,110 @@
+.personal-wine-cellar {
+  min-height: 100vh;
+  background: var(--light-bg);
+  padding: 8rem 0 4rem;
+}
+
+.personal-wine-cellar-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 4rem;
+}
+
+.personal-wine-cellar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 3rem;
+  gap: 2rem;
+}
+
+.personal-wine-cellar-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.5px;
+}
+
+.personal-wine-cellar-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  max-width: 600px;
+}
+
+.personal-wine-cellar-add-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1.75rem;
+  background: var(--olive-green);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.3px;
+  box-shadow: 0 4px 15px rgba(100, 109, 69, 0.2);
+  white-space: nowrap;
+}
+
+.personal-wine-cellar-add-btn:hover {
+  background: #5a6240;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(100, 109, 69, 0.3);
+}
+
+.personal-wine-cellar-add-btn svg {
+  stroke-width: 2.5;
+}
+
+.personal-wine-cellar-form-wrapper {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+@media (max-width: 968px) {
+  .personal-wine-cellar {
+    padding: 6rem 0 3rem;
+  }
+
+  .personal-wine-cellar-container {
+    padding: 0 2rem;
+  }
+
+  .personal-wine-cellar-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .personal-wine-cellar-title {
+    font-size: 2.25rem;
+  }
+
+  .personal-wine-cellar-add-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .personal-wine-cellar-container {
+    padding: 0 1.5rem;
+  }
+
+  .personal-wine-cellar-title {
+    font-size: 1.875rem;
+  }
+
+  .personal-wine-cellar-subtitle {
+    font-size: 1rem;
+  }
+}
