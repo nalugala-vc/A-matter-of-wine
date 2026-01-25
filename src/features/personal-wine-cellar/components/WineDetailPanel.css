@@ -362,3 +362,7 @@
   .wine-detail-delete-btn {
     width: 100%;
   }
+
+  .wine-detail-delete-btn {
+    justify-content: center;
+  }
