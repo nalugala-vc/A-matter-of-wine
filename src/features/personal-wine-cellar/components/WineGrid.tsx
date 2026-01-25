@@ -4,16 +4,14 @@ import './WineGrid.css'
 
 interface WineGridProps {
   wines: Wine[]
-  onEdit?: (wine: Wine) => void
-  onDelete?: (wineId: string) => void
   emptyMessage?: string
+  onWineClick?: (wine: Wine) => void
 }
 
 function WineGrid({
   wines,
-  onEdit,
-  onDelete,
   emptyMessage = 'No wines found. Start building your collection!',
+  onWineClick,
 }: WineGridProps) {
   if (wines.length === 0) {
     return (
@@ -32,8 +30,7 @@ function WineGrid({
         <WineCard
           key={wine.id}
           wine={wine}
-          onEdit={onEdit}
-          onDelete={onDelete}
+          onClick={onWineClick}
         />
       ))}
     </div>

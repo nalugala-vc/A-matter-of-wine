@@ -7,6 +7,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  cursor: pointer;
 }
 
 .wine-card:hover {
@@ -47,10 +48,12 @@
   font-family: 'Inter', sans-serif;
   font-size: 0.75rem;
   font-weight: 600;
-  color: white;
+  color: var(--text-dark);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .wine-card-content {
@@ -150,49 +153,6 @@
 
 .wine-card-pairing-text {
   color: var(--text-dark);
-}
-
-.wine-card-actions {
-  display: flex;
-  gap: 0.75rem;
-  margin-top: auto;
-  padding-top: 1rem;
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
-}
-
-.wine-card-action-btn {
-  flex: 1;
-  padding: 0.6rem 1rem;
-  border: none;
-  border-radius: 5px;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  letter-spacing: 0.3px;
-}
-
-.wine-card-edit-btn {
-  background: var(--olive-green);
-  color: white;
-}
-
-.wine-card-edit-btn:hover {
-  background: #5a6240;
-  transform: translateY(-1px);
-}
-
-.wine-card-delete-btn {
-  background: transparent;
-  color: #dc2626;
-  border: 1px solid #dc2626;
-}
-
-.wine-card-delete-btn:hover {
-  background: #dc2626;
-  color: white;
-  transform: translateY(-1px);
 }
 
 @media (max-width: 768px) {

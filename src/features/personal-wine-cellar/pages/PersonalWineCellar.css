@@ -1,67 +1,186 @@
 .personal-wine-cellar {
   min-height: 100vh;
   background: var(--light-bg);
-  padding: 8rem 0 4rem;
+  padding-top: 0;
 }
 
 .personal-wine-cellar-container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 4rem;
+  padding: 2rem 4rem 4rem;
 }
 
-.personal-wine-cellar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 3rem;
-  gap: 2rem;
+/* Cover Photo Section */
+.cellar-cover-section {
+  width: 100%;
+  background: var(--card-bg);
+  margin-bottom: 0;
 }
 
-.personal-wine-cellar-title {
+.cellar-cover-photo {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--light-bg) 0%, #f0f0f0 100%);
+}
+
+.cellar-cover-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cellar-cover-title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   font-family: 'Playfair Display', serif;
-  font-size: 3rem;
+  font-size: 3.5rem;
   font-weight: 700;
-  color: var(--text-dark);
-  margin-bottom: 0.75rem;
+  color: white;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  margin: 0;
   letter-spacing: -0.5px;
+  z-index: 5;
 }
 
-.personal-wine-cellar-subtitle {
-  font-family: 'Inter', sans-serif;
-  font-size: 1.1rem;
-  color: var(--text-muted);
-  line-height: 1.6;
-  max-width: 600px;
-}
-
-.personal-wine-cellar-add-btn {
+.cellar-edit-cover-btn {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.875rem 1.75rem;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cellar-edit-cover-btn:hover {
+  background: rgba(0, 0, 0, 0.85);
+}
+
+/* Profile Section */
+.cellar-profile-section {
+  position: relative;
+  padding: 0 4rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  display: flex;
+  align-items: flex-end;
+  gap: 1.5rem;
+  background: var(--card-bg);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.cellar-profile-picture {
+  position: relative;
+  margin-top: -60px;
+  z-index: 10;
+}
+
+.cellar-profile-avatar {
+  width: 168px;
+  height: 168px;
+  border-radius: 50%;
+  border: 4px solid var(--card-bg);
+  background: linear-gradient(135deg, var(--olive-green) 0%, var(--emerald-green) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.cellar-profile-info {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1rem;
+}
+
+.cellar-add-wine-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.25rem;
   background: var(--olive-green);
   color: white;
   border: none;
   border-radius: 5px;
   font-family: 'Inter', sans-serif;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
   letter-spacing: 0.3px;
-  box-shadow: 0 4px 15px rgba(100, 109, 69, 0.2);
-  white-space: nowrap;
 }
 
-.personal-wine-cellar-add-btn:hover {
+.cellar-add-wine-btn:hover {
   background: #5a6240;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(100, 109, 69, 0.3);
+  transform: translateY(-1px);
 }
 
-.personal-wine-cellar-add-btn svg {
-  stroke-width: 2.5;
+/* Navigation Tabs */
+.cellar-nav-tabs {
+  display: flex;
+  gap: 0;
+  flex: 1;
+}
+
+.cellar-nav-tab {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.cellar-nav-tab:hover {
+  color: var(--text-dark);
+  background: rgba(100, 109, 69, 0.05);
+}
+
+.cellar-nav-tab.active {
+  color: var(--olive-green);
+  border-bottom-color: var(--olive-green);
+}
+
+.cellar-tab-label {
+  letter-spacing: 0.3px;
+}
+
+.cellar-tab-count {
+  padding: 0.2rem 0.5rem;
+  border-radius: 12px;
+  background: rgba(100, 109, 69, 0.1);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--olive-green);
+}
+
+.cellar-nav-tab.active .cellar-tab-count {
+  background: var(--olive-green);
+  color: white;
 }
 
 .personal-wine-cellar-form-wrapper {
@@ -72,39 +191,83 @@
 }
 
 @media (max-width: 968px) {
-  .personal-wine-cellar {
-    padding: 6rem 0 3rem;
-  }
-
   .personal-wine-cellar-container {
+    padding: 2rem 2rem 3rem;
+  }
+
+  .cellar-cover-photo {
+    height: 300px;
+  }
+
+  .cellar-profile-section {
     padding: 0 2rem;
-  }
-
-  .personal-wine-cellar-header {
+    padding-top: 1rem;
     flex-direction: column;
-    align-items: stretch;
+    align-items: flex-start;
   }
 
-  .personal-wine-cellar-title {
-    font-size: 2.25rem;
+  .cellar-profile-picture {
+    margin-top: -50px;
   }
 
-  .personal-wine-cellar-add-btn {
+  .cellar-profile-avatar {
+    width: 140px;
+    height: 140px;
+  }
+
+  .cellar-profile-info {
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .cellar-cover-title {
+    font-size: 2.5rem;
+  }
+
+  .cellar-add-wine-btn {
     width: 100%;
     justify-content: center;
+  }
+
+  .cellar-nav-tabs {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .cellar-nav-tab {
+    padding: 0.875rem 1rem;
+    font-size: 0.875rem;
+    white-space: nowrap;
   }
 }
 
 @media (max-width: 480px) {
   .personal-wine-cellar-container {
+    padding: 1.5rem 1.5rem 2rem;
+  }
+
+  .cellar-cover-photo {
+    height: 250px;
+  }
+
+  .cellar-profile-section {
     padding: 0 1.5rem;
   }
 
-  .personal-wine-cellar-title {
-    font-size: 1.875rem;
+  .cellar-profile-avatar {
+    width: 120px;
+    height: 120px;
   }
 
-  .personal-wine-cellar-subtitle {
-    font-size: 1rem;
+  .cellar-cover-title {
+    font-size: 2rem;
+  }
+
+  .cellar-nav-tab {
+    padding: 0.75rem 0.875rem;
+    font-size: 0.8rem;
   }
 }

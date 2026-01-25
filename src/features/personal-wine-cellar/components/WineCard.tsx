@@ -3,11 +3,10 @@ import './WineCard.css'
 
 interface WineCardProps {
   wine: Wine
-  onEdit?: (wine: Wine) => void
-  onDelete?: (wineId: string) => void
+  onClick?: (wine: Wine) => void
 }
 
-function WineCard({ wine, onEdit, onDelete }: WineCardProps) {
+function WineCard({ wine, onClick }: WineCardProps) {
   const getCategoryLabel = (category: string) => {
     switch (category) {
       case 'tried':
@@ -18,19 +17,6 @@ function WineCard({ wine, onEdit, onDelete }: WineCardProps) {
         return 'Favorite'
       default:
         return category
-    }
-  }
-
-  const getCategoryColor = (category: string) => {
-    switch (category) {
-      case 'tried':
-        return 'var(--emerald-green)'
-      case 'wishlist':
-        return 'var(--olive-green)'
-      case 'favorite':
-        return 'var(--gold)'
-      default:
-        return 'var(--text-muted)'
     }
   }
 
@@ -46,7 +32,7 @@ function WineCard({ wine, onEdit, onDelete }: WineCardProps) {
   }
 
   return (
-    <div className="wine-card">
+    <div className="wine-card" onClick={() => onClick?.(wine)}>
       <div className="wine-card-image-wrapper">
         {wine.imageUrl ? (
           <img src={wine.imageUrl} alt={wine.name} className="wine-card-image" />
@@ -57,10 +43,7 @@ function WineCard({ wine, onEdit, onDelete }: WineCardProps) {
             </svg>
           </div>
         )}
-        <div
-          className="wine-card-category-badge"
-          style={{ backgroundColor: getCategoryColor(wine.category) }}
-        >
+        <div className="wine-card-category-badge">
           {getCategoryLabel(wine.category)}
         </div>
       </div>
@@ -87,25 +70,6 @@ function WineCard({ wine, onEdit, onDelete }: WineCardProps) {
             <span className="wine-card-pairing-text">{wine.pairingDetails}</span>
           </div>
         )}
-
-        <div className="wine-card-actions">
-          {onEdit && (
-            <button
-              className="wine-card-action-btn wine-card-edit-btn"
-              onClick={() => onEdit(wine)}
-            >
-              Edit
-            </button>
-          )}
-          {onDelete && (
-            <button
-              className="wine-card-action-btn wine-card-delete-btn"
-              onClick={() => onDelete(wine.id)}
-            >
-              Delete
-            </button>
-          )}
-        </div>
       </div>
     </div>
   )
