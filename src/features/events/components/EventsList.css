@@ -1,0 +1,48 @@
+.events-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.events-month-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.events-month-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin: 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid rgba(100, 109, 69, 0.1);
+}
+
+.events-month-events {
+  display: flex;
+  flex-direction: column;
+}
+
+.events-list-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.events-list-empty svg {
+  margin-bottom: 1.5rem;
+  opacity: 0.3;
+}
+
+.events-list-empty-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  margin: 0;
+}

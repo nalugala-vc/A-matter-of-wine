@@ -1,0 +1,27 @@
+.events-page {
+  min-height: 100vh;
+  background: var(--light-bg);
+  padding: 8rem 0 4rem;
+}
+
+.events-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 4rem;
+}
+
+@media (max-width: 968px) {
+  .events-page {
+    padding: 6rem 0 3rem;
+  }
+
+  .events-container {
+    padding: 0 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .events-container {
+    padding: 0 1.5rem;
+  }
+}
