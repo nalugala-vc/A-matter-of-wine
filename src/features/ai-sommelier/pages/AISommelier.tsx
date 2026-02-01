@@ -107,10 +107,12 @@ function AISommelier() {
         <div className="ai-sommelier-content">
           {messages.length === 0 ? (
             <div className="ai-sommelier-welcome">
-              <div className="ai-sommelier-welcome-bubble">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
-                </svg>
+              <div className="ai-sommelier-welcome-bubble-container">
+                <div className="ai-sommelier-welcome-bubble-wrapper">
+                  <div className="ai-sommelier-welcome-bubble-glow"></div>
+                  <div className="ai-sommelier-welcome-bubble-inner">
+                  </div>
+                </div>
               </div>
               <h2 className="ai-sommelier-welcome-title">
                 Good Morning, Wine Lover

@@ -37,19 +37,82 @@
   padding: 2rem;
 }
 
-.ai-sommelier-welcome-bubble {
-  width: 64px;
-  height: 64px;
+.ai-sommelier-welcome-bubble-container {
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.ai-sommelier-welcome-bubble-wrapper {
+  position: relative;
+  width: 128px;
+  height: 128px;
+  margin: 0 auto;
+}
+
+.ai-sommelier-welcome-bubble-glow {
+  position: absolute;
+  inset: 0;
   border-radius: 50%;
-  background: #4caf50;
-  color: white;
+  filter: blur(40px);
+  opacity: 0.6;
+  background: radial-gradient(
+    circle,
+    rgba(107, 124, 63, 0.25) 0%,
+    rgba(138, 156, 95, 0.31) 50%,
+    transparent 70%
+  );
+}
+
+.ai-sommelier-welcome-bubble-inner {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  bottom: 16px;
+  left: 16px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 30% 30%,
+    #9fb06f 0%,
+    rgba(107, 124, 63, 0.8) 50%,
+    rgba(107, 124, 63, 0.67) 100%
+  );
+  box-shadow: 
+    0 8px 32px rgba(107, 124, 63, 0.3),
+    inset 0 -8px 16px rgba(255, 255, 255, 0.3),
+    inset 0 8px 16px rgba(107, 124, 63, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 2rem;
-  box-shadow: 0 4px 16px rgba(76, 175, 80, 0.4);
-  position: relative;
+  color: white;
   z-index: 1;
+}
+
+.ai-sommelier-welcome-bubble-inner svg {
+  position: relative;
+  z-index: 2;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+@media (max-width: 768px) {
+  .ai-sommelier-welcome-bubble-wrapper {
+    width: 100px;
+    height: 100px;
+  }
+
+  .ai-sommelier-welcome-bubble-inner {
+    top: 12px;
+    right: 12px;
+    bottom: 12px;
+    left: 12px;
+  }
+
+  .ai-sommelier-welcome-bubble-inner svg {
+    width: 40px;
+    height: 40px;
+  }
 }
 
 .ai-sommelier-welcome-title {
@@ -57,9 +120,11 @@
   font-size: 2.5rem;
   font-weight: 700;
   color: var(--text-dark);
-  margin: 0 0 1rem 0;
+  margin: 0 auto 1rem auto;
   position: relative;
   z-index: 1;
+  text-align: center;
+  width: 100%;
 }
 
 .ai-sommelier-welcome-subtitle {
@@ -67,9 +132,11 @@
   font-size: 1.5rem;
   font-weight: 400;
   color: var(--text-muted);
-  margin: 0;
+  margin: 0 auto;
   position: relative;
   z-index: 1;
+  text-align: center;
+  width: 100%;
 }
 
 .ai-sommelier-highlight {
@@ -121,9 +188,9 @@
 }
 
 .ai-sommelier-avatar-ai {
-  background: #4caf50;
+  background: var(--olive-green);
   color: white;
-  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+  box-shadow: 0 2px 8px rgba(107, 124, 63, 0.3);
 }
 
 .ai-sommelier-avatar-user {
