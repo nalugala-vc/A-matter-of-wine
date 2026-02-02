@@ -90,7 +90,7 @@ function AISommelier() {
             <Link to="/cellar" className="nav-link" onClick={() => setMobileMenuOpen(false)}>My Cellar</Link>
             <Link to="/events" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Events</Link>
             <Link to="/sommelier" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Sommelier</Link>
-            <a href="#stories" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Stories</a>
+            <Link to="/stories" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Stories</Link>
             <Link to="/login" className="nav-button nav-button-mobile" style={{ textDecoration: 'none' }} onClick={() => setMobileMenuOpen(false)}>
               Get Started
             </Link>

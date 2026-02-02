@@ -16,6 +16,7 @@ import Signup from './auth/Signup'
 import PersonalWineCellar from './features/personal-wine-cellar/pages/PersonalWineCellar'
 import Events from './features/events/pages/Events'
 import AISommelier from './features/ai-sommelier/pages/AISommelier'
+import Stories from './features/stories/pages/Stories'
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/cellar" element={<PersonalWineCellar />} />
         <Route path="/events" element={<Events />} />
         <Route path="/sommelier" element={<AISommelier />} />
+        <Route path="/stories" element={<Stories />} />
         <Route path="/" element={<Home />} />
       </Routes>
     </Router>
@@ -114,8 +116,8 @@ function Home() {
           <div className={`nav-links ${mobileMenuOpen ? 'mobile-open' : ''}`}>
             <Link to="/cellar" className="nav-link" onClick={() => setMobileMenuOpen(false)}>My Cellar</Link>
             <Link to="/events" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Events</Link>
-                    <Link to="/sommelier" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Sommelier</Link>
-            <a href="#stories" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Stories</a>
+            <Link to="/sommelier" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Sommelier</Link>
+            <Link to="/stories" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Stories</Link>
             <Link to="/login" className="nav-button nav-button-mobile" style={{ textDecoration: 'none' }} onClick={() => setMobileMenuOpen(false)}>
               Get Started
             </Link>
