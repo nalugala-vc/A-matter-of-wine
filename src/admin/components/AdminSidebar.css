@@ -1,0 +1,123 @@
+.admin-sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 260px;
+  background: var(--text-primary);
+  color: var(--text-inverse);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  transition: transform 0.2s ease;
+}
+
+.admin-sidebar-overlay {
+  display: none;
+}
+
+.admin-sidebar-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.admin-sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.admin-sidebar-logo h2 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--text-inverse);
+}
+
+.admin-badge {
+  background: var(--primary);
+  color: var(--text-inverse);
+  font-size: 0.625rem;
+  font-weight: 600;
+  padding: 0.125rem 0.5rem;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.admin-sidebar-nav {
+  flex: 1;
+  padding: 0.75rem 0;
+  overflow-y: auto;
+}
+
+.admin-sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.625rem 1.5rem;
+  color: rgba(255, 255, 255, 0.55);
+  text-decoration: none;
+  font-size: 0.8125rem;
+  font-weight: 450;
+  transition: all var(--transition);
+  border-right: 2px solid transparent;
+}
+
+.admin-sidebar-link:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.admin-sidebar-link.active {
+  background: rgba(114, 47, 55, 0.2);
+  color: var(--text-inverse);
+  border-right-color: var(--primary);
+}
+
+.admin-sidebar-link svg {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+}
+
+.admin-sidebar-footer {
+  padding: 0.75rem 0;
+}
+
+.admin-sidebar-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 0 1.5rem 0.75rem;
+}
+
+.admin-sidebar-back {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.admin-sidebar-back:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+@media (max-width: 768px) {
+  .admin-sidebar {
+    transform: translateX(-100%);
+  }
+
+  .admin-sidebar.open {
+    transform: translateX(0);
+  }
+
+  .admin-sidebar-overlay {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--bg-overlay);
+    z-index: 99;
+  }
+}

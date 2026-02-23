@@ -1,39 +1,66 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import Navbar from '../../../components/Navbar'
 import './AISommelier.css'
-
-interface Message {
-  id: string
-  text: string
-  sender: 'user' | 'ai'
-}
+import { Message, FeedbackType } from '../types'
+import { useChatSession, useConversation } from '../hooks'
+import { createConversation, sendMessage as sendMessageApi, addFeedback, regenerateMessage as regenerateMessageApi } from '../services'
 
 function AISommelier() {
-  const [messages, setMessages] = useState<Message[]>([])
   const [inputValue, setInputValue] = useState('')
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [localMessages, setLocalMessages] = useState<Message[]>([])
+  const [sending, setSending] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  
+  const { conversationId, loadConversation } = useChatSession()
+  const { messages: fetchedMessages, loading } = useConversation(conversationId)
 
-  const handleSendMessage = () => {
-    if (!inputValue.trim()) return
-
-    const newMessage: Message = {
-      id: Date.now().toString(),
-      text: inputValue,
-      sender: 'user',
+  // Sync fetched messages with local state
+  useEffect(() => {
+    if (fetchedMessages.length > 0) {
+      setLocalMessages(fetchedMessages)
     }
+  }, [fetchedMessages])
 
-    setMessages((prev) => [...prev, newMessage])
+  const handleSendMessage = async () => {
+    if (!inputValue.trim() || sending) return
+
+    const userText = inputValue.trim()
     setInputValue('')
+    setSending(true)
+    setError(null)
 
-    // Simulate AI response
-    setTimeout(() => {
-      const aiResponse: Message = {
-        id: (Date.now() + 1).toString(),
-        text: 'I\'m analyzing your request and will provide personalized wine recommendations based on your preferences. Let me suggest some excellent options for you...',
-        sender: 'ai',
+    // Always show user message immediately
+    const tempUserMessage: Message = {
+      id: `temp-${Date.now()}`,
+      text: userText,
+      sender: 'user',
+      createdAt: new Date().toISOString(),
+    }
+    setLocalMessages((prev) => [...prev, tempUserMessage])
+
+    try {
+      if (!conversationId) {
+        // Create new conversation with initial message
+        const conversation = await createConversation(userText)
+        loadConversation(conversation.id)
+        setLocalMessages(conversation.messages)
+      } else {
+        // Send message to API
+        const response = await sendMessageApi(conversationId, userText)
+        
+        // Replace temp message with real messages
+        setLocalMessages((prev) => {
+          const withoutTemp = prev.filter((m) => m.id !== tempUserMessage.id)
+          return [...withoutTemp, response.userMessage, response.aiMessage]
+        })
       }
-      setMessages((prev) => [...prev, aiResponse])
-    }, 1000)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to send message')
+      // Remove optimistic update on error
+      setLocalMessages((prev) => prev.filter((m) => !m.id.startsWith('temp-')))
+    } finally {
+      setSending(false)
+    }
   }
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -47,65 +74,48 @@ function AISommelier() {
     navigator.clipboard.writeText(text)
   }
 
-  const handleRegenerate = (messageId: string) => {
-    // Find the message and regenerate
-    const messageIndex = messages.findIndex((m) => m.id === messageId)
-    if (messageIndex > -1 && messages[messageIndex].sender === 'ai') {
-      // Simulate regeneration
-      const regeneratedMessage: Message = {
-        id: Date.now().toString(),
-        text: messages[messageIndex].text + ' (Regenerated)',
-        sender: 'ai',
-      }
-      const newMessages = [...messages]
-      newMessages[messageIndex] = regeneratedMessage
-      setMessages(newMessages)
+  const handleFeedback = async (messageId: string, feedback: FeedbackType) => {
+    if (!conversationId) return
+    
+    try {
+      await addFeedback(conversationId, messageId, feedback)
+      // Update local state
+      setLocalMessages((prev) =>
+        prev.map((m) => (m.id === messageId ? { ...m, feedback } : m))
+      )
+    } catch (err) {
+      console.error('Failed to add feedback:', err)
+    }
+  }
+
+  const handleRegenerate = async (messageId: string) => {
+    if (!conversationId || sending) return
+
+    setSending(true)
+    try {
+      const newMessage = await regenerateMessageApi(conversationId, messageId)
+      setLocalMessages((prev) =>
+        prev.map((m) => (m.id === messageId ? newMessage : m))
+      )
+    } catch (err) {
+      console.error('Failed to regenerate:', err)
+      setError('Failed to regenerate response')
+    } finally {
+      setSending(false)
     }
   }
 
   return (
     <div className="ai-sommelier-page">
-      {/* Navbar */}
-      <nav className="navbar">
-        <div className="nav-container">
-          <div className="nav-logo">
-            <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-              <h2>Winesta</h2>
-            </Link>
-          </div>
-          <button 
-            className="mobile-menu-toggle" 
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? '✕' : '☰'}
-          </button>
-          {mobileMenuOpen && (
-            <div 
-              className="mobile-menu-overlay" 
-              onClick={() => setMobileMenuOpen(false)}
-            ></div>
-          )}
-          <div className={`nav-links ${mobileMenuOpen ? 'mobile-open' : ''}`}>
-            <Link to="/cellar" className="nav-link" onClick={() => setMobileMenuOpen(false)}>My Cellar</Link>
-            <Link to="/events" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Events</Link>
-            <Link to="/sommelier" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Sommelier</Link>
-            <Link to="/stories" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Stories</Link>
-            <Link to="/login" className="nav-button nav-button-mobile" style={{ textDecoration: 'none' }} onClick={() => setMobileMenuOpen(false)}>
-              Get Started
-            </Link>
-          </div>
-          <Link to="/login" className="nav-button nav-button-desktop" style={{ textDecoration: 'none' }}>
-            Get Started
-          </Link>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* Main Content Area */}
       <main className="ai-sommelier-main">
 
         <div className="ai-sommelier-content">
-          {messages.length === 0 ? (
+          {loading ? (
+            <div className="ai-sommelier-loading">Loading conversation...</div>
+          ) : localMessages.length === 0 ? (
             <div className="ai-sommelier-welcome">
               <div className="ai-sommelier-welcome-bubble-container">
                 <div className="ai-sommelier-welcome-bubble-wrapper">
@@ -123,7 +133,7 @@ function AISommelier() {
             </div>
           ) : (
             <div className="ai-sommelier-messages">
-              {messages.map((message, index) => (
+              {localMessages.map((message, index) => (
                 <div key={message.id} className="ai-sommelier-message-wrapper">
                   {message.sender === 'ai' ? (
                     <div className="ai-sommelier-message ai-sommelier-message-ai">
@@ -137,21 +147,26 @@ function AISommelier() {
                           {message.text}
                         </div>
                         <div className="ai-sommelier-message-actions">
-                          <button className="ai-sommelier-feedback-btn" aria-label="Thumbs up">
+                          <button 
+                            className={`ai-sommelier-feedback-btn ${message.feedback === 'up' ? 'active' : ''}`}
+                            aria-label="Thumbs up"
+                            onClick={() => handleFeedback(message.id, 'up')}
+                          >
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                               <path d="M7 10v12M7 10l-4-4v4h4zM7 10h4a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H7" />
                             </svg>
                           </button>
-                          <button className="ai-sommelier-feedback-btn" aria-label="Thumbs down">
+                          <button 
+                            className={`ai-sommelier-feedback-btn ${message.feedback === 'down' ? 'active' : ''}`}
+                            aria-label="Thumbs down"
+                            onClick={() => handleFeedback(message.id, 'down')}
+                          >
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                               <path d="M17 14V2M17 14l4 4v-4h-4zM17 14h-4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h4" />
                             </svg>
                           </button>
                           <button className="ai-sommelier-action-text-btn" onClick={() => handleCopy(message.text)}>
                             Copy
-                          </button>
-                          <button className="ai-sommelier-action-text-btn">
-                            Add to Editor
                           </button>
                         </div>
                       </div>
@@ -169,7 +184,7 @@ function AISommelier() {
                       </div>
                     </div>
                   )}
-                  {message.sender === 'ai' && index === messages.length - 1 && (
+                  {message.sender === 'ai' && index === localMessages.length - 1 && !sending && (
                     <div className="ai-sommelier-regenerate-wrapper">
                       <button className="ai-sommelier-regenerate-btn" onClick={() => handleRegenerate(message.id)}>
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -184,6 +199,31 @@ function AISommelier() {
                   )}
                 </div>
               ))}
+              {sending && (
+                <div className="ai-sommelier-message-wrapper">
+                  <div className="ai-sommelier-message ai-sommelier-message-ai">
+                    <div className="ai-sommelier-avatar ai-sommelier-avatar-ai">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                      </svg>
+                    </div>
+                    <div className="ai-sommelier-message-content-wrapper">
+                      <div className="ai-sommelier-message-content ai-sommelier-typing">
+                        <div className="ai-sommelier-typing-dots">
+                          <span></span>
+                          <span></span>
+                          <span></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+              {error && (
+                <div className="ai-sommelier-error">
+                  <p>{error}</p>
+                </div>
+              )}
             </div>
           )}
 
@@ -228,6 +268,7 @@ function AISommelier() {
                   className="ai-sommelier-send-btn"
                   onClick={handleSendMessage}
                   aria-label="Send message"
+                  disabled={sending || !inputValue.trim()}
                 >
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <line x1="22" y1="2" x2="11" y2="13" />

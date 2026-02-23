@@ -1,11 +1,70 @@
-import { Link } from 'react-router-dom'
-import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useState, FormEvent } from 'react'
+import { useAuth } from '../contexts/AuthContext'
 import './Login.css'
-import loginImage from '../assets/images/pexels-helvel-19584152.jpg'
+const loginImage = 'https://images.unsplash.com/photo-1516594915697-87eb3b1c14ea?w=1200&h=1800&fit=crop&q=80'
 
 function Signup() {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
+  const { signUp, signIn } = useAuth()
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault()
+    setError('')
+
+    // Validate passwords match
+    if (password !== confirmPassword) {
+      setError('Passwords do not match')
+      return
+    }
+
+    // Validate password strength
+    if (password.length < 8) {
+      setError('Password must be at least 8 characters')
+      return
+    }
+
+    setLoading(true)
+
+    try {
+      const result = await signUp.email({
+        email,
+        password,
+        name,
+      })
+
+      if (result.error) {
+        setError(result.error.message || 'Failed to create account')
+      } else {
+        navigate('/feed')
+      }
+    } catch (err) {
+      setError('An error occurred. Please try again.')
+      console.error(err)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleGoogleSignUp = async () => {
+    try {
+      await signIn.social({
+        provider: 'google',
+        callbackURL: '/feed',
+      })
+    } catch (err) {
+      setError('Failed to sign up with Google')
+      console.error(err)
+    }
+  }
 
   return (
     <div className="auth-container">
@@ -17,8 +76,8 @@ function Signup() {
               Join a community of wine enthusiasts.
             </p>
             
-            <form className="auth-form">
-              <button type="button" className="auth-google-btn">
+            <form className="auth-form" onSubmit={handleSubmit}>
+              <button type="button" className="auth-google-btn" onClick={handleGoogleSignUp}>
                 <svg className="google-icon" viewBox="0 0 24 24" width="20" height="20">
                   <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
                   <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
@@ -31,21 +90,27 @@ function Signup() {
               <div className="auth-divider">
                 <span>or</span>
               </div>
+
+              {error && <div className="auth-error">{error}</div>}
               
               <div className="auth-input-group">
                 <input
                   type="text"
                   placeholder="Enter username"
                   className="auth-input"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                   required
                 />
               </div>
               
               <div className="auth-input-group">
                 <input
-                  type="text"
+                  type="email"
                   placeholder="Enter email"
                   className="auth-input"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   required
                 />
               </div>
@@ -55,6 +120,8 @@ function Signup() {
                   type={showPassword ? "text" : "password"}
                   placeholder="Create password"
                   className="auth-input"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   required
                 />
                 <button
@@ -82,6 +149,8 @@ function Signup() {
                   type={showConfirmPassword ? "text" : "password"}
                   placeholder="Confirm password"
                   className="auth-input"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
                   required
                 />
                 <button
@@ -104,8 +173,8 @@ function Signup() {
                 </button>
               </div>
               
-              <button type="submit" className="auth-submit-btn">
-                Sign Up
+              <button type="submit" className="auth-submit-btn" disabled={loading}>
+                {loading ? 'Creating account...' : 'Sign Up'}
               </button>
             </form>
             
@@ -118,7 +187,7 @@ function Signup() {
         <div className="auth-image-section">
           <Link to="/" className="auth-back-link auth-back-link-signup-mobile">← Back to Home</Link>
           <div className="auth-brand-overlay auth-brand-overlay-signup">
-            <h1>Winesta</h1>
+            <h1>Ethnovino</h1>
           </div>
           <img src={loginImage} alt="Wine" className="auth-image" />
         </div>

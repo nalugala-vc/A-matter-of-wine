@@ -1,0 +1,168 @@
+.ticket-view-page {
+  min-height: 100vh;
+  background: var(--bg-secondary);
+  padding: 4.5rem 0 3rem;
+}
+
+.ticket-view-container {
+  max-width: 440px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.ticket-view-back {
+  display: inline-flex;
+  align-items: center; gap: 0.375rem;
+  font-size: 0.8125rem; font-weight: 500;
+  color: var(--text-secondary);
+  background: none; border: none; cursor: pointer; padding: 0;
+  margin-bottom: 1.25rem;
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.ticket-view-back:hover { color: var(--primary); }
+
+.ticket-view-card {
+  background: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border-primary);
+  box-shadow: var(--shadow-md);
+  margin-bottom: 1.25rem;
+}
+
+.ticket-view-header {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.ticket-view-header-label {
+  font-size: 0.625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 0.375rem;
+}
+
+.ticket-view-header-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: white;
+}
+
+.ticket-view-body { padding: 1.5rem; }
+
+.ticket-view-code-wrapper { text-align: center; margin-bottom: 1rem; }
+
+.ticket-view-code {
+  display: inline-block;
+  background: var(--primary-lighter);
+  color: var(--primary);
+  padding: 0.4rem 1.25rem;
+  border-radius: var(--radius-full);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+}
+
+.ticket-view-qr-wrapper {
+  display: flex; justify-content: center; margin: 1.25rem 0;
+}
+
+.ticket-view-qr {
+  width: 200px; height: 200px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border-primary);
+  background: white;
+}
+
+.ticket-view-qr img { width: 100%; height: 100%; object-fit: contain; }
+
+.ticket-view-divider {
+  height: 1px;
+  background: repeating-linear-gradient(to right, var(--border-secondary), var(--border-secondary) 6px, transparent 6px, transparent 12px);
+  margin: 1.25rem 0;
+}
+
+.ticket-view-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.ticket-view-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ticket-view-info-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.ticket-view-info-value {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: right;
+}
+
+.ticket-view-status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.175rem 0.5rem;
+  border-radius: var(--radius-full);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.ticket-view-status-confirmed { background: #ecfdf5; color: #059669; }
+.ticket-view-status-checked_in { background: #eff6ff; color: #2563eb; }
+.ticket-view-status-cancelled { background: #fef2f2; color: #dc2626; }
+.ticket-view-status-pending_payment { background: #fefce8; color: #d97706; }
+
+.ticket-view-actions {
+  display: flex; gap: 0.5rem; flex-direction: column;
+}
+
+.ticket-view-cancel-btn {
+  width: 100%;
+  padding: 0.625rem;
+  background: var(--bg-primary);
+  color: #dc2626;
+  border: 1px solid #fecaca;
+  border-radius: var(--radius-full);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.ticket-view-cancel-btn:hover { background: #fef2f2; border-color: #dc2626; }
+.ticket-view-cancel-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.ticket-view-print-hint {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  text-align: center;
+}
+
+.ticket-view-loading, .ticket-view-error {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  color: var(--text-tertiary);
+}
+
+@media print {
+  .ticket-view-page { padding: 0; background: white; }
+  .ticket-view-back, .ticket-view-actions, nav { display: none !important; }
+}

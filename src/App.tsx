@@ -1,43 +1,90 @@
 import { useEffect, useRef, useState } from 'react'
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Navbar from './components/Navbar'
 import './App.css'
-import heroImage1 from './assets/images/WhatsApp Image 2026-01-21 at 00.05.13.jpeg'
-import heroImage2 from './assets/images/pexels-mlkbnl-9299260.jpg'
-import heroImage3 from './assets/images/pexels-marketingtuig-87224.jpg'
-import heroImage4 from './assets/images/ChatGPT Image Jan 25, 2026, 06_56_39 PM.png'
-import personalCellarImage from './assets/features/personal_wine_cellar_2.png'
-import vibrantCommImage from './assets/features/vibrant_comm_2.png'
-import eventsMeetupsImage from './assets/features/events_meetups_2.png'
-import aiSommelierImage from './assets/features/ai_sommlier_2.png'
 import leftGrapevine from './assets/images/left_purple.png'
 import rightGrapevine from './assets/images/right_purple.png'
+
+// Minimalist stock images
+const heroImage1 = 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=1920&h=1080&fit=crop&q=80'
+const heroImage2 = 'https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=1920&h=1080&fit=crop&q=80'
+const heroImage3 = 'https://images.unsplash.com/photo-1474722883778-792e7990302f?w=1920&h=1080&fit=crop&q=80'
+const heroImage4 = 'https://images.unsplash.com/photo-1423483641154-5411ec9c0ddf?w=1920&h=1080&fit=crop&q=80'
+const personalCellarImage = 'https://images.unsplash.com/photo-1586370434639-0fe43b2d32e6?w=800&h=600&fit=crop&q=80'
+const vibrantCommImage = 'https://images.unsplash.com/photo-1528823872057-9c018a7a7553?w=800&h=600&fit=crop&q=80'
+const eventsMeetupsImage = 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=600&fit=crop&q=80'
+const aiSommelierImage = 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=800&h=600&fit=crop&q=80'
 import Login from './auth/Login'
 import Signup from './auth/Signup'
 import PersonalWineCellar from './features/personal-wine-cellar/pages/PersonalWineCellar'
 import Events from './features/events/pages/Events'
+import EventDetail from './features/events/pages/EventDetail'
 import AISommelier from './features/ai-sommelier/pages/AISommelier'
 import Stories from './features/stories/pages/Stories'
+import StoryDetail from './features/stories/pages/StoryDetail'
+import MockCheckout from './features/tickets/pages/MockCheckout'
+import TicketConfirmation from './features/tickets/pages/TicketConfirmation'
+import MyTickets from './features/tickets/pages/MyTickets'
+import TicketView from './features/tickets/pages/TicketView'
+import Feed from './features/feed/pages/Feed'
+import Profile from './features/social/pages/Profile'
+import Explore from './features/social/pages/Explore'
+import Notifications from './features/notifications/pages/Notifications'
+import { AuthProvider } from './contexts/AuthContext'
+
+// Admin imports
+import { AdminLayout } from './admin/components'
+import {
+  AdminDashboard,
+  UserManagement,
+  EventManagement,
+  StoryManagement,
+  AdminInvite,
+  TicketScanner,
+} from './admin/pages'
 
 function App() {
   return (
-    <Router>
-      <Routes>
+    <AuthProvider>
+      <Router>
+        <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/feed" element={<Feed />} />
+        <Route path="/explore" element={<Explore />} />
+        <Route path="/profile/:userId" element={<Profile />} />
+        <Route path="/notifications" element={<Notifications />} />
         <Route path="/cellar" element={<PersonalWineCellar />} />
         <Route path="/events" element={<Events />} />
+        <Route path="/events/:eventId" element={<EventDetail />} />
+        <Route path="/tickets" element={<MyTickets />} />
+        <Route path="/tickets/checkout/:ticketId" element={<MockCheckout />} />
+        <Route path="/tickets/confirmation/:ticketCode" element={<TicketConfirmation />} />
+        <Route path="/tickets/verify/:ticketCode" element={<TicketView />} />
         <Route path="/sommelier" element={<AISommelier />} />
         <Route path="/stories" element={<Stories />} />
+        <Route path="/stories/:storyId" element={<StoryDetail />} />
+        
+        {/* Admin Routes */}
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<AdminDashboard />} />
+          <Route path="users" element={<UserManagement />} />
+          <Route path="events" element={<EventManagement />} />
+          <Route path="stories" element={<StoryManagement />} />
+          <Route path="tickets/scan" element={<TicketScanner />} />
+          <Route path="invite" element={<AdminInvite />} />
+        </Route>
+        
         <Route path="/" element={<Home />} />
-      </Routes>
-    </Router>
+        </Routes>
+      </Router>
+    </AuthProvider>
   )
 }
 
 function Home() {
   const featureItemsRef = useRef<(HTMLDivElement | null)[]>([])
   const [currentSlide, setCurrentSlide] = useState(0)
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const heroImages = [heroImage1, heroImage2, heroImage3, heroImage4]
 
   useEffect(() => {
@@ -93,40 +140,7 @@ function Home() {
   return (
     <div className="app">
       {/* Navbar */}
-      <nav className="navbar">
-        <div className="nav-container">
-          <div className="nav-logo">
-            <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-              <h2>Winesta</h2>
-            </Link>
-          </div>
-          <button 
-            className="mobile-menu-toggle" 
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? '✕' : '☰'}
-          </button>
-          {mobileMenuOpen && (
-            <div 
-              className="mobile-menu-overlay" 
-              onClick={() => setMobileMenuOpen(false)}
-            ></div>
-          )}
-          <div className={`nav-links ${mobileMenuOpen ? 'mobile-open' : ''}`}>
-            <Link to="/cellar" className="nav-link" onClick={() => setMobileMenuOpen(false)}>My Cellar</Link>
-            <Link to="/events" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Events</Link>
-            <Link to="/sommelier" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Sommelier</Link>
-            <Link to="/stories" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Stories</Link>
-            <Link to="/login" className="nav-button nav-button-mobile" style={{ textDecoration: 'none' }} onClick={() => setMobileMenuOpen(false)}>
-              Get Started
-            </Link>
-          </div>
-          <Link to="/login" className="nav-button nav-button-desktop" style={{ textDecoration: 'none' }}>
-            Get Started
-          </Link>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* Hero Section */}
       <section className="hero">
@@ -250,7 +264,7 @@ function Home() {
             <div className="articles-grid">
               <article className="article-card">
                 <div className="article-image-wrapper">
-                  <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=800&h=600&fit=crop" alt="Wine Tasting" className="article-image" />
+                  <img src="https://images.unsplash.com/photo-1547595628-c61a29f496f0?w=800&h=600&fit=crop&q=80" alt="Wine Tasting" className="article-image" />
                 </div>
                 <div className="article-content">
                   <p className="article-date">April.07.2021</p>
@@ -264,7 +278,7 @@ function Home() {
 
               <article className="article-card">
                 <div className="article-image-wrapper">
-                  <img src="https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=800&h=600&fit=crop" alt="Wine Pairing" className="article-image" />
+                  <img src="https://images.unsplash.com/photo-1569919659476-f0852f9fede3?w=800&h=600&fit=crop&q=80" alt="Wine Pairing" className="article-image" />
                 </div>
                 <div className="article-content">
                   <p className="article-date">June.12.2021</p>
@@ -318,7 +332,7 @@ function Home() {
               <div className="testimonial-card testimonial-card-1">
                 <div className="testimonial-quote-mark">"</div>
                 <p className="testimonial-text">
-                  I was amazed at the quality of Winesta. The community recommendations led me to discover wines I never would have tried. Thank you for creating such an incredible platform!
+                  I was amazed at the quality of Ethnovino. The community recommendations led me to discover wines I never would have tried. Thank you for creating such an incredible platform!
                 </p>
                 <div className="testimonial-author">
                   <div className="testimonial-info">
@@ -334,7 +348,7 @@ function Home() {
               <div className="testimonial-card testimonial-card-2">
                 <div className="testimonial-quote-mark">"</div>
                 <p className="testimonial-text">
-                  Keep up the excellent work! Winesta should be nominated for community platform of the year. The AI sommelier recommendations are spot-on. You won't regret joining!
+                  Keep up the excellent work! Ethnovino should be nominated for community platform of the year. The AI sommelier recommendations are spot-on. You won't regret joining!
                 </p>
                 <div className="testimonial-author">
                   <div className="testimonial-info">
@@ -350,7 +364,7 @@ function Home() {
               <div className="testimonial-card testimonial-card-3">
                 <div className="testimonial-quote-mark">"</div>
                 <p className="testimonial-text">
-                  Winesta is the most valuable wine resource we have ever discovered. The personal wine cellar feature has transformed how I track and organize my collection. I would be lost without it.
+                  Ethnovino is the most valuable wine resource we have ever discovered. The personal wine cellar feature has transformed how I track and organize my collection. I would be lost without it.
                 </p>
                 <div className="testimonial-author">
                   <div className="testimonial-info">
@@ -403,7 +417,7 @@ function Home() {
         <div className="footer-container">
           <div className="footer-content">
             <div className="footer-brand">
-              <h3 className="footer-logo">Winesta</h3>
+              <h3 className="footer-logo">Ethnovino</h3>
               <p className="footer-tagline">
                 Connecting wine enthusiasts worldwide through shared passion, discovery, and community.
               </p>
@@ -460,7 +474,7 @@ function Home() {
 
           <div className="footer-bottom">
             <p className="footer-copyright">
-              © {new Date().getFullYear()} Winesta. All rights reserved.
+              © {new Date().getFullYear()} Ethnovino. All rights reserved.
             </p>
             <div className="footer-bottom-links">
               <a href="#" className="footer-bottom-link">Privacy</a>

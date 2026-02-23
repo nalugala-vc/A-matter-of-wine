@@ -1,23 +1,55 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-  /* Luxury Color Palette */
-  --emerald-green: #10b981;
-  --emerald-green-dark: #059669;
-  --olive-green: #6b7c3f;
-  --olive-green-dark: #4a5530;
-  --gold: #d4af37;
-  --gold-light: #f4e4bc;
-  --gold-dark: #b8941f;
-  --light-bg: #fafafa;
-  --light-bg-transparent: rgba(250, 250, 250, 0.9);
-  --dark-bg: #1a1a1a;
-  --text-dark: #1a1a1a;
-  --text-muted: #666666;
-  --text-light: #f5f5f5;
-  --card-bg: #ffffff;
+  --primary: #722F37;
+  --primary-light: #8B3A44;
+  --primary-lighter: rgba(114, 47, 55, 0.08);
+  --primary-border: rgba(114, 47, 55, 0.2);
 
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f7f8fa;
+  --bg-tertiary: #f0f2f5;
+  --bg-hover: #f5f5f5;
+  --bg-overlay: rgba(0, 0, 0, 0.5);
+
+  --text-primary: #0f1419;
+  --text-secondary: #536471;
+  --text-tertiary: #8899a6;
+  --text-inverse: #ffffff;
+
+  --border-primary: #eff3f4;
+  --border-secondary: #e1e4e8;
+  --border-focus: var(--primary);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  --transition: 0.2s ease;
+
+  /* Legacy aliases for backward compat */
+  --emerald-green: var(--primary);
+  --emerald-green-dark: var(--primary-light);
+  --olive-green: var(--primary);
+  --olive-green-dark: var(--primary-light);
+  --gold: var(--primary);
+  --gold-light: var(--primary-lighter);
+  --gold-dark: var(--primary-light);
+  --light-bg: var(--bg-secondary);
+  --light-bg-transparent: rgba(247, 248, 250, 0.9);
+  --dark-bg: #0f1419;
+  --text-dark: var(--text-primary);
+  --text-muted: var(--text-secondary);
+  --text-light: var(--text-inverse);
+  --card-bg: var(--bg-primary);
+
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -34,12 +66,25 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background-color: var(--light-bg);
-  color: var(--text-dark);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   overflow-x: hidden;
 }
 
 #root {
   width: 100%;
   min-height: 100vh;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+}
+
+input, textarea, select {
+  font-family: inherit;
 }

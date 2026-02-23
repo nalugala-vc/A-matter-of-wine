@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, FormEvent } from 'react'
-import { WineFormData, WineCategory } from '../types'
+import { WineFormData } from '../types'
 import './WineForm.css'
 
 interface WineFormProps {
@@ -23,6 +23,7 @@ function WineForm({
     tastingNotes: initialData?.tastingNotes || '',
     pairingDetails: initialData?.pairingDetails || '',
     category: initialData?.category || 'tried',
+    isPublic: initialData?.isPublic ?? false,
     image: undefined,
   })
 
@@ -182,6 +183,22 @@ function WineForm({
             placeholder="e.g., Grilled steak, aged cheese, dark chocolate"
           />
         </div>
+      </div>
+
+      <div className="wine-form-section">
+        <h3 className="wine-form-section-title">Visibility</h3>
+        <label className="wine-form-toggle-label">
+          <input
+            type="checkbox"
+            checked={formData.isPublic}
+            onChange={(e) => setFormData(prev => ({ ...prev, isPublic: e.target.checked }))}
+            className="wine-form-toggle-input"
+          />
+          <span className="wine-form-toggle-switch" />
+          <span className="wine-form-toggle-text">
+            {formData.isPublic ? 'Public — visible on your profile' : 'Private — only you can see this'}
+          </span>
+        </label>
       </div>
 
       <div className="wine-form-section">

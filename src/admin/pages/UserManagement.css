@@ -1,0 +1,209 @@
+.user-management {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.user-management-header {
+  margin-bottom: 1.5rem;
+}
+
+.user-management-header h1 {
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 0.25rem;
+}
+
+.user-management-header p {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.user-management-filters {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.search-input-wrapper {
+  position: relative;
+  flex: 1;
+  max-width: 360px;
+}
+
+.search-input-wrapper svg {
+  position: absolute;
+  left: 0.875rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-tertiary);
+  width: 16px;
+  height: 16px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.5rem 0.875rem 0.5rem 2.5rem;
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-full);
+  font-size: 0.8125rem;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: border-color var(--transition);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--border-focus);
+}
+
+.filter-select {
+  padding: 0.5rem 0.875rem;
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-full);
+  font-size: 0.8125rem;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-width: 120px;
+  transition: border-color var(--transition);
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: var(--border-focus);
+}
+
+.user-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+.user-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-full);
+  background: var(--primary);
+  color: var(--text-inverse);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.75rem;
+  overflow: hidden;
+}
+
+.user-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.user-info {
+  min-width: 0;
+}
+
+.user-name {
+  font-weight: 500;
+  font-size: 0.8125rem;
+  color: var(--text-primary);
+  margin: 0 0 0.0625rem;
+}
+
+.user-email {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.role-badge,
+.status-badge {
+  display: inline-block;
+  padding: 0.1875rem 0.5rem;
+  border-radius: var(--radius-full);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.role-badge.role-admin {
+  background: var(--primary-lighter);
+  color: var(--primary);
+}
+
+.role-badge.role-user {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+}
+
+.status-badge.active {
+  background: rgba(34, 197, 94, 0.08);
+  color: #22c55e;
+}
+
+.status-badge.banned {
+  background: rgba(239, 68, 68, 0.08);
+  color: #ef4444;
+}
+
+.user-actions {
+  display: flex;
+  gap: 0.375rem;
+}
+
+.action-btn {
+  padding: 0.25rem 0.625rem;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: all var(--transition);
+}
+
+.action-btn-ban {
+  background: rgba(239, 68, 68, 0.08);
+  color: #ef4444;
+}
+
+.action-btn-ban:hover {
+  background: rgba(239, 68, 68, 0.15);
+}
+
+.action-btn-unban {
+  background: rgba(34, 197, 94, 0.08);
+  color: #22c55e;
+}
+
+.action-btn-unban:hover {
+  background: rgba(34, 197, 94, 0.15);
+}
+
+.action-btn-promote {
+  background: var(--primary-lighter);
+  color: var(--primary);
+}
+
+.action-btn-promote:hover {
+  background: rgba(114, 47, 55, 0.15);
+}
+
+.action-btn-demote {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+}
+
+.action-btn-demote:hover {
+  background: var(--border-secondary);
+}
+
+@media (max-width: 768px) {
+  .user-management-filters {
+    flex-direction: column;
+  }
+
+  .search-input-wrapper {
+    max-width: none;
+  }
+}

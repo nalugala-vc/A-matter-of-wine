@@ -6,11 +6,12 @@ interface WineDetailPanelProps {
   wine: Wine | null
   isOpen: boolean
   onClose: () => void
-  onSave: (wineId: string | null, formData: WineFormData) => void
-  onDelete?: (wineId: string) => void
+  onSave: (wineId: string | null, formData: WineFormData) => void | Promise<void>
+  onDelete?: (wineId: string) => void | Promise<void>
+  saving?: boolean
 }
 
-function WineDetailPanel({ wine, isOpen, onClose, onSave, onDelete }: WineDetailPanelProps) {
+function WineDetailPanel({ wine, isOpen, onClose, onSave, onDelete, saving = false }: WineDetailPanelProps) {
   const [formData, setFormData] = useState<WineFormData | null>(null)
   const [imagePreview, setImagePreview] = useState<string | null>(null)
   const isAddMode = wine === null
@@ -64,17 +65,17 @@ function WineDetailPanel({ wine, isOpen, onClose, onSave, onDelete }: WineDetail
     }
   }
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     const wineId = isAddMode ? null : wine!.id
-    onSave(wineId, formData)
-    onClose()
+    await onSave(wineId, formData)
+    // Note: onClose is now called by the parent after successful save
   }
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     if (wine && window.confirm('Are you sure you want to delete this wine?')) {
-      onDelete?.(wine.id)
-      onClose()
+      await onDelete?.(wine.id)
+      // Note: onClose is now called by the parent after successful delete
     }
   }
 
@@ -90,19 +91,6 @@ function WineDetailPanel({ wine, isOpen, onClose, onSave, onDelete }: WineDetail
         ★
       </button>
     ))
-  }
-
-  const getCategoryLabel = (category: string) => {
-    switch (category) {
-      case 'tried':
-        return 'Tried'
-      case 'wishlist':
-        return 'Wishlist'
-      case 'favorite':
-        return 'Favorite'
-      default:
-        return category
-    }
   }
 
   return (
@@ -256,6 +244,7 @@ function WineDetailPanel({ wine, isOpen, onClose, onSave, onDelete }: WineDetail
                 type="button"
                 className="wine-detail-delete-btn"
                 onClick={handleDelete}
+                disabled={saving}
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <polyline points="3 6 5 6 21 6" />
@@ -264,8 +253,8 @@ function WineDetailPanel({ wine, isOpen, onClose, onSave, onDelete }: WineDetail
                 Delete
               </button>
             )}
-            <button type="submit" className="wine-detail-save-btn">
-              {isAddMode ? 'Add Wine' : 'Save Changes'}
+            <button type="submit" className="wine-detail-save-btn" disabled={saving}>
+              {saving ? 'Saving...' : isAddMode ? 'Add Wine' : 'Save Changes'}
             </button>
           </div>
         </form>

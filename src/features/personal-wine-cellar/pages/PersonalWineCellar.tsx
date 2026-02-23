@@ -2,76 +2,41 @@ import { useState } from 'react'
 import { Wine, WineCategory, WineFormData } from '../types'
 import WineGrid from '../components/WineGrid'
 import WineDetailPanel from '../components/WineDetailPanel'
-import coverImage from '../../../assets/images/pexels-helvel-19584152.jpg'
-import wineImage1 from '../../../assets/images/pexels-mlkbnl-9299260.jpg'
-import wineImage2 from '../../../assets/images/pexels-marketingtuig-87224.jpg'
-import wineImage3 from '../../../assets/images/ChatGPT Image Jan 25, 2026, 06_56_39 PM.png'
+import Navbar from '../../../components/Navbar'
+import { useWines, useWineStats } from '../hooks'
+const coverImage = 'https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=1600&h=600&fit=crop&q=80'
 import './PersonalWineCellar.css'
 
-// Mock data for UI development
-const mockWines: Wine[] = [
-  {
-    id: '1',
-    name: 'Château Margaux',
-    year: 2015,
-    region: 'Bordeaux, France',
-    rating: 5,
-    tastingNotes:
-      'Elegant and refined with notes of blackcurrant, cedar, and violets. Silky tannins and a long, complex finish.',
-    pairingDetails: 'Grilled steak, lamb, aged cheese',
-    category: 'favorite',
-    imageUrl: wineImage1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  },
-  {
-    id: '2',
-    name: 'Dom Pérignon',
-    year: 2012,
-    region: 'Champagne, France',
-    rating: 5,
-    tastingNotes:
-      'Crisp and refreshing with citrus and white flower notes. Fine bubbles and a creamy texture.',
-    pairingDetails: 'Oysters, caviar, sushi',
-    category: 'tried',
-    imageUrl: wineImage2,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  },
-  {
-    id: '3',
-    name: 'Opus One',
-    year: 2018,
-    region: 'Napa Valley, USA',
-    rating: 4,
-    tastingNotes:
-      'Bold and rich with dark fruit flavors, spice, and oak. Full-bodied with firm tannins.',
-    pairingDetails: 'Ribeye steak, dark chocolate',
-    category: 'wishlist',
-    imageUrl: wineImage3,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  },
-]
-
 function PersonalWineCellar() {
-  const [wines, setWines] = useState<Wine[]>(mockWines)
-  const [activeCategory, setActiveCategory] = useState<WineCategory | 'all'>(
-    'all'
-  )
+  const [activeCategory, setActiveCategory] = useState<WineCategory | 'all'>('all')
   const [selectedWine, setSelectedWine] = useState<Wine | null>(null)
   const [isDetailPanelOpen, setIsDetailPanelOpen] = useState(false)
+  const [saving, setSaving] = useState(false)
 
-  const filteredWines =
-    activeCategory === 'all'
-      ? wines
-      : wines.filter((wine) => wine.category === activeCategory)
+  const { 
+    wines, 
+    loading, 
+    error, 
+    filterByCategory, 
+    addWine, 
+    editWine, 
+    removeWine 
+  } = useWines({ 
+    category: activeCategory === 'all' ? undefined : activeCategory 
+  })
+  
+  const { stats, refetch: refetchStats } = useWineStats()
+
+  const handleCategoryChange = (category: WineCategory | 'all') => {
+    setActiveCategory(category)
+    filterByCategory(category === 'all' ? undefined : category)
+  }
 
   const categoryCounts = {
-    all: wines.length,
-    tried: wines.filter((w) => w.category === 'tried').length,
-    wishlist: wines.filter((w) => w.category === 'wishlist').length,
-    favorite: wines.filter((w) => w.category === 'favorite').length,
+    all: stats?.total ?? 0,
+    tried: stats?.tried ?? 0,
+    wishlist: stats?.wishlist ?? 0,
+    favorite: stats?.favorite ?? 0,
   }
 
   const handleAddWine = () => {
@@ -91,40 +56,35 @@ function PersonalWineCellar() {
     }, 400) // Wait for animation to complete
   }
 
-  const handleSaveWine = (wineId: string | null, formData: WineFormData) => {
-    if (wineId === null) {
-      // Add new wine
-      const newWine: Wine = {
-        id: Date.now().toString(),
-        ...formData,
-        imageUrl: formData.image
-          ? URL.createObjectURL(formData.image)
-          : undefined,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
+  const handleSaveWine = async (wineId: string | null, formData: WineFormData) => {
+    setSaving(true)
+    try {
+      if (wineId === null) {
+        // Add new wine
+        await addWine(formData)
+      } else {
+        // Update existing wine
+        await editWine(wineId, formData)
       }
-      setWines((prev) => [...prev, newWine])
-    } else {
-      // Update existing wine
-      setWines((prev) =>
-        prev.map((w) =>
-          w.id === wineId
-            ? {
-                ...w,
-                ...formData,
-                imageUrl: formData.image
-                  ? URL.createObjectURL(formData.image)
-                  : w.imageUrl,
-                updatedAt: new Date().toISOString(),
-              }
-            : w
-        )
-      )
+      refetchStats() // Update stats after save
+      handleCloseDetailPanel()
+    } catch (err) {
+      console.error('Failed to save wine:', err)
+      alert('Failed to save wine. Please try again.')
+    } finally {
+      setSaving(false)
     }
   }
 
-  const handleDeleteWine = (wineId: string) => {
-    setWines((prev) => prev.filter((w) => w.id !== wineId))
+  const handleDeleteWine = async (wineId: string) => {
+    try {
+      await removeWine(wineId)
+      refetchStats() // Update stats after delete
+      handleCloseDetailPanel()
+    } catch (err) {
+      console.error('Failed to delete wine:', err)
+      alert('Failed to delete wine. Please try again.')
+    }
   }
 
   const tabs = [
@@ -136,6 +96,8 @@ function PersonalWineCellar() {
 
   return (
     <div className="personal-wine-cellar">
+      <Navbar />
+
       {/* Cover Photo Section */}
       <div className="cellar-cover-section">
         <div className="cellar-cover-photo">
@@ -168,7 +130,7 @@ function PersonalWineCellar() {
                 <button
                   key={tab.value}
                   className={`cellar-nav-tab ${activeCategory === tab.value ? 'active' : ''}`}
-                  onClick={() => setActiveCategory(tab.value)}
+                  onClick={() => handleCategoryChange(tab.value)}
                 >
                   <span className="cellar-tab-label">{tab.label}</span>
                   {tab.count > 0 && (
@@ -200,21 +162,30 @@ function PersonalWineCellar() {
 
       {/* Content Section */}
       <div className="personal-wine-cellar-container">
-        <WineGrid
-          wines={filteredWines}
-          emptyMessage={
-            activeCategory === 'all'
-              ? 'No wines in your cellar yet. Start building your collection!'
-              : `No wines in the ${activeCategory} category.`
-          }
-          onWineClick={handleWineClick}
-        />
+        {loading ? (
+          <div className="cellar-loading">Loading your wine collection...</div>
+        ) : error ? (
+          <div className="cellar-error">
+            <p>Unable to load your wines. Please try again later.</p>
+          </div>
+        ) : (
+          <WineGrid
+            wines={wines}
+            emptyMessage={
+              activeCategory === 'all'
+                ? 'No wines in your cellar yet. Start building your collection!'
+                : `No wines in the ${activeCategory} category.`
+            }
+            onWineClick={handleWineClick}
+          />
+        )}
         <WineDetailPanel
           wine={selectedWine}
           isOpen={isDetailPanelOpen}
           onClose={handleCloseDetailPanel}
           onSave={handleSaveWine}
           onDelete={handleDeleteWine}
+          saving={saving}
         />
       </div>
     </div>

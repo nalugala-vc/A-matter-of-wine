@@ -1,0 +1,331 @@
+.profile-page {
+  min-height: 100vh;
+  background: var(--bg-secondary);
+}
+
+.profile-container {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 72px 16px 40px;
+}
+
+.profile-header {
+  background: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border-primary);
+  margin-bottom: 16px;
+}
+
+.profile-cover {
+  height: 180px;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  background-size: cover;
+  background-position: center;
+}
+
+.profile-info {
+  padding: 0 20px 20px;
+  position: relative;
+}
+
+.profile-avatar-wrapper {
+  margin-top: -40px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.profile-avatar {
+  width: 88px;
+  height: 88px;
+  border-radius: var(--radius-full);
+  border: 3px solid var(--bg-primary);
+  background: var(--primary-lighter);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--primary);
+  overflow: hidden;
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.profile-follow-btn {
+  padding: 7px 20px;
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+  border: 1px solid;
+}
+
+.profile-follow-btn.follow {
+  background: var(--primary);
+  color: var(--text-inverse);
+  border-color: var(--primary);
+}
+
+.profile-follow-btn.follow:hover { background: var(--primary-light); }
+
+.profile-follow-btn.following {
+  background: var(--bg-primary);
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.profile-follow-btn.following:hover {
+  background: #fef2f2;
+  color: #dc2626;
+  border-color: #dc2626;
+}
+
+.profile-edit-btn {
+  padding: 7px 20px;
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  background: var(--bg-primary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-secondary);
+  transition: all var(--transition);
+  text-decoration: none;
+}
+
+.profile-edit-btn:hover { background: var(--bg-hover); }
+
+.profile-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 2px;
+}
+
+.profile-location {
+  font-size: 13px;
+  color: var(--text-tertiary);
+  margin-bottom: 6px;
+}
+
+.profile-bio {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.profile-prefs {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.profile-pref-tag {
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  background: var(--primary-lighter);
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.profile-stats {
+  display: flex;
+  gap: 20px;
+}
+
+.profile-stat { cursor: pointer; }
+
+.profile-stat:hover .stat-count { color: var(--primary); }
+
+.stat-count {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--text-primary);
+  transition: color var(--transition);
+}
+
+.stat-label {
+  font-size: 13px;
+  color: var(--text-tertiary);
+  margin-left: 4px;
+}
+
+.profile-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 16px;
+  background: var(--bg-primary);
+  border-radius: var(--radius-md);
+  padding: 4px;
+  border: 1px solid var(--border-primary);
+}
+
+.profile-tab {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  background: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: all var(--transition);
+}
+
+.profile-tab:hover { background: var(--bg-hover); }
+
+.profile-tab.active {
+  background: var(--primary);
+  color: var(--text-inverse);
+}
+
+.public-cellar-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.public-wine-card {
+  background: var(--bg-primary);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  border: 1px solid var(--border-primary);
+  transition: all var(--transition);
+}
+
+.public-wine-card:hover {
+  border-color: var(--border-secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.public-wine-image {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  margin-bottom: 8px;
+  background: var(--bg-tertiary);
+}
+
+.public-wine-name {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--text-primary);
+}
+
+.public-wine-meta {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}
+
+.public-wine-rating {
+  color: #f59e0b;
+  font-size: 12px;
+  margin-top: 3px;
+}
+
+.public-wine-category {
+  display: inline-block;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: var(--radius-full);
+  background: var(--primary-lighter);
+  color: var(--primary);
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+.follow-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--bg-overlay);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.follow-modal {
+  background: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  width: 90%;
+  max-width: 400px;
+  max-height: 70vh;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.follow-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.follow-modal-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.follow-modal-close {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: var(--text-tertiary);
+  padding: 4px;
+}
+
+.follow-modal-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.profile-loading {
+  text-align: center;
+  padding: 48px 20px;
+  color: var(--text-tertiary);
+  font-size: 14px;
+}
+
+.profile-private {
+  text-align: center;
+  padding: 48px 20px;
+  background: var(--bg-primary);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-primary);
+}
+
+.profile-private h3 {
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.profile-section-empty {
+  text-align: center;
+  padding: 32px 20px;
+  color: var(--text-tertiary);
+  font-size: 14px;
+}
