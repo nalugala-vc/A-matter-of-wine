@@ -4,16 +4,15 @@ import Navbar from './components/Navbar'
 import './App.css'
 import leftGrapevine from './assets/images/left_purple.png'
 import rightGrapevine from './assets/images/right_purple.png'
+const personalCellarImage = 'https://images.unsplash.com/photo-1516594915697-87eb3b1c14ea?w=800&h=600&fit=crop&q=80'
+const vibrantCommImage = 'https://images.unsplash.com/photo-1758272134196-1ab895629bce?q=80&w=800&auto=format&fit=crop'
+const eventsMeetupsImage = 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=600&fit=crop&q=80'
+const aiSommelierImage = 'https://images.unsplash.com/photo-1673227780925-4e3ad9017069?q=80&w=800&auto=format&fit=crop'
 
-// Minimalist stock images
 const heroImage1 = 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=1920&h=1080&fit=crop&q=80'
 const heroImage2 = 'https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=1920&h=1080&fit=crop&q=80'
 const heroImage3 = 'https://images.unsplash.com/photo-1474722883778-792e7990302f?w=1920&h=1080&fit=crop&q=80'
 const heroImage4 = 'https://images.unsplash.com/photo-1423483641154-5411ec9c0ddf?w=1920&h=1080&fit=crop&q=80'
-const personalCellarImage = 'https://images.unsplash.com/photo-1586370434639-0fe43b2d32e6?w=800&h=600&fit=crop&q=80'
-const vibrantCommImage = 'https://images.unsplash.com/photo-1528823872057-9c018a7a7553?w=800&h=600&fit=crop&q=80'
-const eventsMeetupsImage = 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=600&fit=crop&q=80'
-const aiSommelierImage = 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=800&h=600&fit=crop&q=80'
 import Login from './auth/Login'
 import Signup from './auth/Signup'
 import PersonalWineCellar from './features/personal-wine-cellar/pages/PersonalWineCellar'
@@ -150,18 +149,19 @@ function Home() {
               key={index}
               className={`hero-slide ${index === currentSlide ? 'active' : ''}`}
               style={{ backgroundImage: `url(${image})` }}
-            >
-              {(index === 1 || index === 2 || index === 3) && (
-                <div className="hero-text-overlay">
-                  <p className="hero-chalk-text">
-                    sometimes its just a matter of{' '}
-                    <span className="hero-crossed-out">time</span>
-                    <span className="hero-wine-text">wine</span>
-                  </p>
-                </div>
-              )}
-            </div>
+            />
           ))}
+
+          <div className="hero-content">
+            <h1 className="hero-headline">Where Wine Lovers Connect</h1>
+            <p className="hero-subtext">
+              Build your cellar, discover new wines, join tastings, and get AI-powered recommendations, all in one community.
+            </p>
+            <div className="hero-cta-group">
+              <a href="/signup" className="hero-cta-primary">Join Free</a>
+              <a href="/events" className="hero-cta-secondary">Browse Events</a>
+            </div>
+          </div>
           
           <button className="hero-nav hero-nav-prev" onClick={prevSlide} aria-label="Previous slide">
             ←
@@ -244,10 +244,10 @@ function Home() {
               ref={(el) => (featureItemsRef.current[3] = el)}
             >
               <div className="feature-image-wrapper">
-                <img src={aiSommelierImage} alt="AI Sommelier" className="feature-image" />
+                <img src={aiSommelierImage} alt="Personal Sommelier" className="feature-image" />
               </div>
               <div className="feature-content">
-                <h3 className="feature-title">AI Sommelier</h3>
+                <h3 className="feature-title">Personal Sommelier</h3>
                 <p className="feature-description">
                   Get personalized wine recommendations powered by artificial intelligence. Our AI learns from your taste logs and preferences, suggesting wines based on flavor profiles, occasions, and meal pairings. Chat with our AI assistant to ask "What wine pairs with sushi?" or "What's similar to this Merlot?" Discover your perfect match through intelligent, personalized suggestions.
                 </p>
@@ -267,7 +267,7 @@ function Home() {
                   <img src="https://images.unsplash.com/photo-1547595628-c61a29f496f0?w=800&h=600&fit=crop&q=80" alt="Wine Tasting" className="article-image" />
                 </div>
                 <div className="article-content">
-                  <p className="article-date">April.07.2021</p>
+                  <p className="article-date">January.15.2026</p>
                   <h3 className="article-title">Is there a perfect moment to serve Port wine?</h3>
                   <p className="article-description">
                     Discover the optimal timing for serving Port wine to enhance its flavors and create the perfect tasting experience. Learn about the ideal moments and occasions that complement this rich, fortified wine.
@@ -278,10 +278,10 @@ function Home() {
 
               <article className="article-card">
                 <div className="article-image-wrapper">
-                  <img src="https://images.unsplash.com/photo-1569919659476-f0852f9fede3?w=800&h=600&fit=crop&q=80" alt="Wine Pairing" className="article-image" />
+                  <img src="https://images.unsplash.com/photo-1673227780925-4e3ad9017069?q=80&w=800&auto=format&fit=crop" alt="Wine Pairing" className="article-image" />
                 </div>
                 <div className="article-content">
-                  <p className="article-date">June.12.2021</p>
+                  <p className="article-date">February.03.2026</p>
                   <h3 className="article-title">At what temperature should Port wine be served?</h3>
                   <p className="article-description">
                     Master the art of serving Port wine at the perfect temperature. Understanding the ideal serving temperature can dramatically enhance the wine's aromas, flavors, and overall tasting experience.
@@ -436,7 +436,7 @@ function Home() {
                   <li><a href="#" className="footer-link">Personal Cellar</a></li>
                   <li><a href="#" className="footer-link">Community Feed</a></li>
                   <li><a href="#" className="footer-link">Events & Meetups</a></li>
-                  <li><a href="#" className="footer-link">AI Sommelier</a></li>
+                  <li><a href="#" className="footer-link">Personal Sommelier</a></li>
                 </ul>
               </div>
 
