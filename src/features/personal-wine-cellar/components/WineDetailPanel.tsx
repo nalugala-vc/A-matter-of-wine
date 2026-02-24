@@ -28,6 +28,7 @@ function WineDetailPanel({ wine, isOpen, onClose, onSave, onDelete, saving = fal
         tastingNotes: '',
         pairingDetails: '',
         category: 'tried',
+        isPublic: false,
       })
       setImagePreview(null)
     } else if (wine) {
@@ -40,6 +41,7 @@ function WineDetailPanel({ wine, isOpen, onClose, onSave, onDelete, saving = fal
         tastingNotes: wine.tastingNotes,
         pairingDetails: wine.pairingDetails,
         category: wine.category,
+        isPublic: wine.isPublic,
       })
       setImagePreview(wine.imageUrl || null)
     }

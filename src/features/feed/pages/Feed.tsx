@@ -29,7 +29,7 @@ function Feed() {
           </button>
         </div>
 
-        <PostComposer onSubmit={addPost} />
+        <PostComposer onSubmit={async (data, images) => { await addPost(data, images) }} />
 
         {loading && posts.length === 0 ? (
           <div className="feed-loading">Loading posts...</div>
