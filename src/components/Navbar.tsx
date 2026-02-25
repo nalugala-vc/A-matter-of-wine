@@ -10,8 +10,8 @@ function Navbar() {
   const location = useLocation()
   const navigate = useNavigate()
   const { isAuthenticated, user, signOut } = useAuth()
-  const { count: unreadCount, refetch: refetchCount } = useUnreadCount()
-  const { notifications, loading: notifsLoading, markAsRead, markAllAsRead } = useNotifications()
+  const { count: unreadCount, refetch: refetchCount } = useUnreadCount(isAuthenticated)
+  const { notifications, loading: notifsLoading, markAsRead, markAllAsRead } = useNotifications(isAuthenticated)
   const notifRef = useRef<HTMLDivElement>(null)
 
   const isActive = (path: string) => location.pathname === path || location.pathname.startsWith(path + '/')

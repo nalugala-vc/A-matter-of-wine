@@ -39,7 +39,8 @@ function Signup() {
         email,
         password,
         name,
-      })
+        username: name,
+      } as Parameters<typeof signUp.email>[0])
 
       if (result.error) {
         setError(result.error.message || 'Failed to create account')
@@ -58,7 +59,7 @@ function Signup() {
     try {
       await signIn.social({
         provider: 'google',
-        callbackURL: '/feed',
+        callbackURL: '/choose-username',
       })
     } catch (err) {
       setError('Failed to sign up with Google')

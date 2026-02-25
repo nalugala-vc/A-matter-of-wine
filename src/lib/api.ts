@@ -22,13 +22,14 @@ apiClient.interceptors.request.use(async (config) => {
   return config
 })
 
-// Handle auth errors (avoid redirect loop on login/signup pages)
+// Handle auth errors (skip redirect on public pages)
+const PUBLIC_PATHS = ['/', '/login', '/signup']
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
       const path = window.location.pathname
-      if (path !== '/login' && path !== '/signup') {
+      if (!PUBLIC_PATHS.includes(path)) {
         window.location.href = '/login'
       }
     }

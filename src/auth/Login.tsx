@@ -41,7 +41,7 @@ function Login() {
     try {
       await signIn.social({
         provider: 'google',
-        callbackURL: '/feed',
+        callbackURL: '/choose-username',
       })
     } catch (err) {
       setError('Failed to sign in with Google')

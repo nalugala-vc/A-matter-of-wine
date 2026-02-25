@@ -5,6 +5,7 @@ interface User {
   id: string
   email: string
   name: string
+  username?: string | null
   image?: string | null
   role?: 'user' | 'admin'
 }
@@ -13,6 +14,7 @@ interface AuthContextType {
   user: User | null
   isLoading: boolean
   isAuthenticated: boolean
+  needsUsername: boolean
   signIn: typeof signIn
   signUp: typeof signUp
   signOut: typeof signOut
@@ -28,6 +30,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         id: session.user.id,
         email: session.user.email,
         name: session.user.name || session.user.email.split('@')[0],
+        username: (session.user as { username?: string }).username || null,
         image: session.user.image,
         role: (session.user as { role?: 'user' | 'admin' }).role || 'user',
       }
@@ -39,6 +42,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         user,
         isLoading: isPending,
         isAuthenticated: !!user,
+        needsUsername: !!user && !user.username,
         signIn,
         signUp,
         signOut,

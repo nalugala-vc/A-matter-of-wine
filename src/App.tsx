@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import './App.css'
 import leftGrapevine from './assets/images/left_purple.png'
@@ -15,6 +15,7 @@ const heroImage3 = 'https://images.unsplash.com/photo-1474722883778-792e7990302f
 const heroImage4 = 'https://images.unsplash.com/photo-1423483641154-5411ec9c0ddf?w=1920&h=1080&fit=crop&q=80'
 import Login from './auth/Login'
 import Signup from './auth/Signup'
+import ChooseUsername from './auth/ChooseUsername'
 import PersonalWineCellar from './features/personal-wine-cellar/pages/PersonalWineCellar'
 import Events from './features/events/pages/Events'
 import EventDetail from './features/events/pages/EventDetail'
@@ -49,6 +50,7 @@ function App() {
         <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/choose-username" element={<ChooseUsername />} />
         <Route path="/feed" element={<Feed />} />
         <Route path="/explore" element={<Explore />} />
         <Route path="/profile/:userId" element={<Profile />} />
@@ -158,8 +160,8 @@ function Home() {
               Build your cellar, discover new wines, join tastings, and get AI-powered recommendations, all in one community.
             </p>
             <div className="hero-cta-group">
-              <a href="/signup" className="hero-cta-primary">Join Free</a>
-              <a href="/events" className="hero-cta-secondary">Browse Events</a>
+              <Link to="/signup" className="hero-cta-primary">Join Free</Link>
+              <Link to="/events" className="hero-cta-secondary">Browse Events</Link>
             </div>
           </div>
           

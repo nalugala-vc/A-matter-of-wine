@@ -14,11 +14,11 @@ interface UseNotificationsState {
   error: string | null
 }
 
-export function useNotifications() {
+export function useNotifications(enabled = true) {
   const [state, setState] = useState<UseNotificationsState>({
     notifications: [],
     total: 0,
-    loading: true,
+    loading: false,
     error: null,
   })
 
@@ -42,8 +42,9 @@ export function useNotifications() {
   }, [])
 
   useEffect(() => {
+    if (!enabled) return
     fetchNotifications()
-  }, [fetchNotifications])
+  }, [fetchNotifications, enabled])
 
   const markAsRead = async (id: string) => {
     await markOneRead(id)
@@ -66,7 +67,7 @@ export function useNotifications() {
   return { ...state, refetch: fetchNotifications, markAsRead, markAllAsRead }
 }
 
-export function useUnreadCount() {
+export function useUnreadCount(enabled = true) {
   const [count, setCount] = useState(0)
   const intervalRef = useRef<ReturnType<typeof setInterval>>()
 
@@ -80,13 +81,13 @@ export function useUnreadCount() {
   }, [])
 
   useEffect(() => {
+    if (!enabled) return
     fetchCount()
-    // Poll every 30 seconds
     intervalRef.current = setInterval(fetchCount, 30000)
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current)
     }
-  }, [fetchCount])
+  }, [fetchCount, enabled])
 
   return { count, refetch: fetchCount }
 }
